@@ -8,40 +8,29 @@ import getPropsWithValues from "./utils/getPropsWithValues";
  */
 const HtmlElement = (props: HtmlElementProps) => {
 
-    // __htmlAttributes
-    const htmlAttributesProps = getPropsWithValues(props, [
-        {
-            path: '__htmlAttributes.img.src', attrName: 'src'
-        }
-    ]);
+    const validProps = getPropsWithValues(props, [{
+        path: 'tailWindClasses',
+        attrName: 'className'
+    }]);
 
     let elementProps: any = {
         'data-gen': 'tailwindcss',
-        ...htmlAttributesProps
+        ...validProps
     };
 
-    let classNames = '';
-    const {tailWindClasses} = props;
-    if (tailWindClasses && tailWindClasses.length > 0) {
-        classNames = tailWindClasses.join(' ').trim();
-    }
-    if (classNames) {
-        elementProps.className = classNames;
-    }
-
-    const htmlTag: string = get(props, '_htmlTag', 'div');
+    const htmlTag: string = get(props, 'htmlTag', 'div');
     switch (htmlTag) {
         case 'img':
             return React.createElement(htmlTag, elementProps);
         default:
-            return React.createElement(htmlTag, elementProps, props._children);
+            return React.createElement(htmlTag, elementProps, props.children);
     }
 };
 
 HtmlElement.propTypes = HtmlElementTypes;
 
 HtmlElement.defaultProps = {
-    _children: [
+    children: [
         <span />
     ],
 };

@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 
 export interface HtmlElementProps {
 
-    _htmlTag?: string;
-    _children?: React.ReactNode;
-    tailWindClasses?: string[];
+    htmlTag?: string;
+    children?: React.ReactNode;
+    tailWindClasses?: string;
 }
 
 export const HtmlElementTypes: PropTypes.InferProps<HtmlElementProps> = {
     /**
      * HTML Tag
      */
-    _htmlTag: PropTypes.oneOf([
+    htmlTag: PropTypes.oneOf([
         'div',
         'h1',
         'h2',
@@ -23,10 +23,10 @@ export const HtmlElementTypes: PropTypes.InferProps<HtmlElementProps> = {
     /**
      * An array of the nested HTML elements
      */
-    _children: PropTypes.arrayOf(PropTypes.element),
+    children: PropTypes.arrayOf(PropTypes.element),
     /**
      * Tail Wind Classes `test`
      */
-    tailWindClasses: PropTypes.arrayOf(PropTypes.string),
+    tailWindClasses: PropTypes.string,
 
 };
