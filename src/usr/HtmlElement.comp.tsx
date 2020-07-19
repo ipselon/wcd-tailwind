@@ -1,22 +1,23 @@
 import get from 'lodash/get';
 import React from 'react';
 import {HtmlElementProps, HtmlElementTypes} from './HtmlElement.props';
-import getPropsWithValues from "./utils/getPropsWithValues";
+import constructTailWindClassesString from './utils/constructTailWindClassesString';
 
 /**
  * This is a sample component, it shows how to create function wrappers.
  */
 const HtmlElement = (props: HtmlElementProps) => {
 
-    const validProps = getPropsWithValues(props, [{
-        path: 'tailWindClasses',
-        attrName: 'className'
-    }]);
-
     let elementProps: any = {
         'data-gen': 'tailwindcss',
-        ...validProps
     };
+
+    const { tailWindClasses } = props;
+
+    let className = constructTailWindClassesString(tailWindClasses);
+    if (className) {
+        elementProps.className = className.trim();
+    }
 
     const htmlTag: string = get(props, 'htmlTag', 'div');
     switch (htmlTag) {

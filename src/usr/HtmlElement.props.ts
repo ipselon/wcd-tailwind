@@ -5,7 +5,7 @@ export interface HtmlElementProps {
 
     htmlTag?: string;
     children?: React.ReactNode;
-    tailWindClasses?: string;
+    tailWindClasses?: any;
 }
 
 export const HtmlElementTypes: PropTypes.InferProps<HtmlElementProps> = {
@@ -27,6 +27,6 @@ export const HtmlElementTypes: PropTypes.InferProps<HtmlElementProps> = {
     /**
      * Tail Wind Classes `test`
      */
-    tailWindClasses: PropTypes.string,
+    tailWindClasses: PropTypes.object,
 
 };
