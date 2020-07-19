@@ -37,6 +37,9 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "wcd": {
+    "appMode": "demo"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
