@@ -12,7 +12,6 @@
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@webcodesk/react-app-framework-demo": "2.0.28",
-    "@webcodesk/webcodesk-srv": "^2.0.4",
     "autoprefixer": "^9.8.4",
     "cross-env": "6.0.3",
     "express": "4.17.1",
@@ -22,7 +21,6 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.2.0",
-    "tailwindcss": "^1.4.6",
     "typescript": "~3.7.2"
   },
   "scripts": {
@@ -30,9 +28,8 @@
     "build": "cross-env GENERATE_SOURCEMAP=false react-scripts build",
     "test": "react-scripts test --modulePaths=src",
     "eject": "react-scripts eject",
-    "wcd": "webcodesk-srv -p 7070",
     "server": "node ./server.js",
-    "build-css": "postcss css/tailwind.css -o public/tailwind.css"
+    "build-css": "postcss css/tailwind.css -o src/tailwind.css"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^1.6.0"
   }
 }

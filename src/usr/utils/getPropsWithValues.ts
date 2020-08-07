@@ -1,10 +1,9 @@
-import {HtmlElementProps} from "../HtmlElement.props";
 import isNil from 'lodash/isNil';
 import get from "lodash/get";
 import set from "lodash/set";
 
 function getPropsWithValues(
-    props: HtmlElementProps,
+    props: any,
     pathToAttrMap: { path: string, attrName: string }[],
 ): any {
     let result = {};

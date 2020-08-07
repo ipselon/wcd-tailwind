@@ -1,8 +1,7 @@
-import {HtmlElementProps} from "../HtmlElement.props";
 import get from "lodash/get";
 
 function getClassName(
-    props: HtmlElementProps,
+    props: any,
     path: string,
     defaultValue?: string,
     prefix?: string
