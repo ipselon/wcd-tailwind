@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 // @ts-ignore
-import Application, {getDemoFiles} from '@webcodesk/react-app-framework-demo';
+import Application, {getDemoFiles} from './framework';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
@@ -10,7 +10,7 @@ const userComponents: any = require('./app/indices/userComponents').default;
 const userFunctions: any = require('./app/indices/userFunctions').default;
 
 function render() {
-    getDemoFiles({schema}).then(({schema}: { schema: any }) => {
+    getDemoFiles({schema, settings: {}}).then(({schema}: { schema: any }) => {
         ReactDOM.render(
             <Application
                 schema={schema}

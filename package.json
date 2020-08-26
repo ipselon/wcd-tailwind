@@ -11,16 +11,19 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
-    "@webcodesk/react-app-framework-demo": "2.0.28",
     "autoprefixer": "^9.8.4",
+    "axios": "0.19.2",
     "cross-env": "6.0.3",
     "express": "4.17.1",
+    "localforage": "1.7.3",
     "lodash": "4.17.15",
     "postcss-cli": "^7.1.1",
     "prop-types": "15.7.2",
+    "query-string": "6.11.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.2.0",
+    "tailwindcss": "^1.7.5",
     "typescript": "~3.7.2"
   },
   "scripts": {
@@ -49,7 +52,5 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "tailwindcss": "^1.6.0"
-  }
+  "devDependencies": {}
 }
