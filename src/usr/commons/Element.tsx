@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 import React from 'react';
 import {ElementProps, ElementTypes} from './Element.props';
-import constructTailWindClassesString from './utils/constructTailWindClassesString';
+import constructTailWindClassesString from '../utils/constructTailWindClassesString';
 
 /**
  * This is a sample component, it shows how to create function wrappers.

@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 // @ts-ignore
 import Application, {getDemoFiles} from '@webcodesk/react-app-framework-demo';
 import './index.css';
-import './tailwind.css';
 import * as serviceWorker from './serviceWorker';
 
 const schema: any = require('./app/schema').default;

@@ -1,19 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export interface AddressProps {
+export interface SectionProps {
     children?: React.ReactNode;
     tailwindUtilities?: any;
 }
 
-export const AddressTypes: PropTypes.InferProps<AddressProps> = {
+export const SectionTypes: PropTypes.InferProps<SectionProps> = {
     /**
      * An array of the nested HTML elements
      */
     children: PropTypes.arrayOf(PropTypes.element),
     /**
-     * Tailwind utilities
+     * Tail Wind Classes `test`
      */
     tailwindUtilities: PropTypes.object,
-
 };

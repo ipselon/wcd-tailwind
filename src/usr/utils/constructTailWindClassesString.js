@@ -8,6 +8,8 @@ export default function (props) {
    * Layout
    */
 
+  console.time('Construct tailwind classes');
+
   // Container
   className += get(props, 'layout.container.container', false) ? ' container' : '';
   className += get(props, 'layout.container.mxAuto', false) ? ' mx-auto' : '';
@@ -263,6 +265,8 @@ export default function (props) {
    */
 
   className += getClassNameFromShaped(props, 'accessibility.screenReaders');
+
+  console.timeEnd('Construct tailwind classes');
 
   return className ? className.trim() : '';
 
