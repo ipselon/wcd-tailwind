@@ -42,34 +42,14 @@ class Application extends React.Component {
       const {data: message} = event;
       if (message) {
         const { type, payload } = message;
-        if (type === constants.WEBCODESK_MESSAGE_START_LISTENING_TO_FRAMEWORK) {
-          window.__webcodeskIsListeningToFramework = true;
-          setTimeout(() => {
-            window.__sendFrameworkMessage({
-              type: constants.FRAMEWORK_MESSAGE_INIT_DEBUG,
-              payload: {
-                actionSequences: this.actionSequences
-              },
-            });
-          }, 0);
-        } else if (type === constants.WEBCODESK_MESSAGE_STOP_LISTENING_TO_FRAMEWORK) {
-          window.__webcodeskIsListeningToFramework = false;
-        } else if (type === constants.WEBCODESK_MESSAGE_SAVE_DEMO_FILES && payload) {
+        if (type === constants.WEBCODESK_MESSAGE_SAVE_DEMO_FILES && payload) {
           const {schema, settings} = payload;
           saveSchema(schema)
             .then(() => {
               return saveSettings(settings);
             })
-            .then(() => {
-              window.__sendFrameworkMessage({
-                type: constants.FRAMEWORK_MESSAGE_DEMO_FILES_SAVED,
-              });
-            })
             .catch((error) => {
               console.error(error.message);
-              window.__sendFrameworkMessage({
-                type: constants.FRAMEWORK_MESSAGE_DEMO_FILES_SAVED,
-              });
             });
         }
       }
