@@ -11,19 +11,61 @@ let boundaries = [];
 
 let lastPosition;
 
+let isDragging;
+
+const borderStyle = '1px solid #2979FF';
+const borderRadius = '2px';
+
 export function initElements() {
+  isDragging = false;
   const rootElement = document.body;
   if (rootElement) {
     startPoint = document.createElement('div');
     rootElement.append(startPoint);
+    startPoint.style.width = '1px';
+    startPoint.style.height = '1px';
+    startPoint.style.position = 'absolute';
+    startPoint.style.display = 'block';
+    startPoint.style.zIndex = 999999999;
+
     topLine = document.createElement('div');
     startPoint.append(topLine);
+    topLine.style.position = 'absolute';
+    topLine.style.top = '0px';
+    topLine.style.left = '0px';
+    topLine.style.height = '0px';
+    topLine.style.borderTopLeftRadius = borderRadius;
+    topLine.style.borderTopLeftRadius = borderRadius;
+    topLine.style.borderTop = borderStyle;
+
     leftLine = document.createElement('div');
     startPoint.append(leftLine);
+    leftLine.style.position = 'absolute';
+    leftLine.style.top = '0px';
+    leftLine.style.left = '0px';
+    leftLine.style.width = '0px';
+    leftLine.style.borderTopLeftRadius = borderRadius;
+    leftLine.style.borderBottomLeftRadius = borderRadius;
+    leftLine.style.borderLeft = borderStyle;
+
     rightLine = document.createElement('div');
     startPoint.append(rightLine);
+    rightLine.style.position = 'absolute';
+    rightLine.style.top = '0px';
+    rightLine.style.width = '0px';
+    rightLine.style.borderTopRightRadius = borderRadius;
+    rightLine.style.borderBottomRightRadius = borderRadius;
+    rightLine.style.borderRight = borderStyle;
+
     bottomLine = document.createElement('div');
     startPoint.append(bottomLine);
+    bottomLine.style.position = 'absolute';
+    bottomLine.style.left = '0px';
+    bottomLine.style.height = '0px';
+    bottomLine.style.borderBottomLeftRadius = borderRadius;
+    bottomLine.style.borderBottomRightRadius = borderRadius;
+    bottomLine.style.borderBottom = borderStyle;
+
     boundaries = [
       topLine, leftLine, rightLine, bottomLine, startPoint
     ];
@@ -82,9 +124,6 @@ function hideBoundaries() {
   lastPosition = null;
 }
 
-const borderStyle = '1px solid #2979FF';
-const borderRadius = '2px';
-
 function showBoundaries(position) {
   boundaries.forEach(item => {
     if (item) {
@@ -94,50 +133,19 @@ function showBoundaries(position) {
   if (startPoint) {
     startPoint.style.top = `${position.top}px`;
     startPoint.style.left = `${position.left}px`;
-    startPoint.style.width = '1px';
-    startPoint.style.height = '1px';
-    startPoint.style.position = 'absolute';
-    startPoint.style.display = 'block';
-    startPoint.style.zIndex = 999999999;
     if (topLine) {
-      topLine.style.position = 'absolute';
-      topLine.style.top = '0px';
-      topLine.style.left = '0px';
       topLine.style.width = `${position.width - 1}px`;
-      topLine.style.height = '0px';
-      topLine.style.borderTopLeftRadius = borderRadius;
-      topLine.style.borderTopLeftRadius = borderRadius;
-      topLine.style.borderTop = borderStyle;
     }
     if (leftLine) {
-      leftLine.style.position = 'absolute';
-      leftLine.style.top = '0px';
-      leftLine.style.left = '0px';
-      leftLine.style.width = '0px';
       leftLine.style.height = `${position.height - 1}px`;
-      leftLine.style.borderTopLeftRadius = borderRadius;
-      leftLine.style.borderBottomLeftRadius = borderRadius;
-      leftLine.style.borderLeft = borderStyle;
     }
     if (rightLine) {
-      rightLine.style.position = 'absolute';
       rightLine.style.right = `-${position.width - 1}px`;
-      rightLine.style.top = '0px';
-      rightLine.style.width = '0px';
       rightLine.style.height = `${position.height}px`;
-      rightLine.style.borderTopRightRadius = borderRadius;
-      rightLine.style.borderBottomRightRadius = borderRadius;
-      rightLine.style.borderRight = borderStyle;
     }
     if (bottomLine) {
-      bottomLine.style.position = 'absolute';
       bottomLine.style.bottom = `-${position.height - 1}px`;
-      bottomLine.style.left = '0px';
       bottomLine.style.width = `${position.width - 1}px`;
-      bottomLine.style.height = '0px';
-      bottomLine.style.borderBottomLeftRadius = borderRadius;
-      bottomLine.style.borderBottomRightRadius = borderRadius;
-      bottomLine.style.borderBottom = borderStyle;
     }
   }
 }

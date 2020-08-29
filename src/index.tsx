@@ -10,16 +10,14 @@ const userComponents: any = require('./app/indices/userComponents').default;
 const userFunctions: any = require('./app/indices/userFunctions').default;
 
 function render() {
-    getDemoFiles({schema, settings: {}}).then(({schema}: { schema: any }) => {
-        ReactDOM.render(
-            <Application
-                schema={schema}
-                userComponents={userComponents}
-                userFunctions={userFunctions}
-            />,
-            document.getElementById('root')
-        );
-    });
+    ReactDOM.render(
+        <Application
+            schema={schema}
+            userComponents={userComponents}
+            userFunctions={userFunctions}
+        />,
+        document.getElementById('root')
+    );
 }
 
 if (process.env.NODE_ENV !== 'production') {
