@@ -7,16 +7,15 @@ import { SectionOrTextProps, SectionOrTextTypes } from './commons/SectionOrText.
  */
 const H3 = ({ tailwindUtilities, children, text }: SectionOrTextProps) => (
     <HtmlElement tag="h3" tailwindUtilities={tailwindUtilities}>
-        {text && text.length > 0 ? text : children}
+        {React.Children.count(children) > 0 ? children : text}
     </HtmlElement>
 );
 
 H3.propTypes = SectionOrTextTypes;
 
 H3.defaultProps = {
-    children: [
-        <span />
-    ],
+    text: 'Text here',
+
 };
 
 export default H3;

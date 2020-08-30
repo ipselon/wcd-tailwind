@@ -7,16 +7,14 @@ import { SectionOrTextProps, SectionOrTextTypes } from './commons/SectionOrText.
  */
 const P = ({ tailwindUtilities, children, text }: SectionOrTextProps) => (
     <HtmlElement tag="p" tailwindUtilities={tailwindUtilities}>
-        {text && text.length > 0 ? text : children}
+        {React.Children.count(children) > 0 ? children : text}
     </HtmlElement>
 );
 
 P.propTypes = SectionOrTextTypes;
 
 P.defaultProps = {
-    children: [
-        <span />
-    ],
+    text: 'Text here',
 };
 
 export default P;

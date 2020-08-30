@@ -2,6 +2,7 @@ import get from 'lodash/get';
 import cloneDeep from 'lodash/cloneDeep';
 import isArray from 'lodash/isArray';
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import ComponentWrapper from "./ComponentWrapper";
@@ -137,6 +138,124 @@ const renderComponent = (userComponents, description, serviceComponentOptions, r
       if (children && children.length > 0) {
         children.forEach(child => {
           newArrayModel = renderComponent(userComponents, child, serviceComponentOptions, newArrayModel);
+        });
+      }
+      if (rootProps) {
+        if (propertyName) {
+          rootProps[propertyName] = newArrayModel;
+        } else {
+          if (rootProps.push) {
+            rootProps.push(newArrayModel);
+          } else {
+            console.error('It seems that you missed propertyName in the page component target in the page config.');
+          }
+        }
+      }
+    } else if (type === constants.COMPONENT_PROPERTY_STRING_TYPE
+      || type === constants.COMPONENT_PROPERTY_ONE_OF_TYPE
+      || type === constants.COMPONENT_PROPERTY_SYMBOL_TYPE
+      || type === constants.COMPONENT_PROPERTY_BOOL_TYPE
+      || type === constants.COMPONENT_PROPERTY_ANY_TYPE
+      || type === constants.COMPONENT_PROPERTY_NUMBER_TYPE) {
+      if (rootProps) {
+        if (propertyName) {
+          if (propertyName !== constants.COMPONENT_PROPERTY_DO_NOT_USE_IN_FLOWS_NAME) {
+            rootProps[propertyName] = propertyValue;
+          }
+        } else {
+          if (typeof propertyValue !== 'undefined') {
+            if (rootProps.push) {
+              rootProps.push(propertyValue);
+            } else {
+              console.error('It seems that you missed propertyName in the page component target in the page config.');
+            }
+          }
+        }
+      }
+    }
+  }
+  return rootProps;
+};
+
+const renderRealComponent = (userComponents, description, rootProps) => {
+  if (description) {
+    const {type, key, props, children} = description;
+    if (!type || !props) {
+      return rootProps;
+    }
+    const { componentName, propertyName, propertyValue } = props;
+    if (type === constants.PAGE_COMPONENT_TYPE || type === constants.PAGE_NODE_TYPE) {
+      let newElement;
+      const component = get(userComponents, componentName, null);
+      if (component) {
+        let propsComponent = {};
+        if (children && children.length > 0) {
+          children.forEach(child => {
+            propsComponent = renderRealComponent(userComponents, child, propsComponent);
+          });
+        }
+        let nestedComponents = [];
+        if (propsComponent.children && isArray(propsComponent.children)) {
+          nestedComponents = propsComponent.children;
+          delete propsComponent.children;
+        }
+        newElement = React.createElement(component, {key, ...propsComponent}, nestedComponents);
+      } else {
+        newElement = React.createElement(NotFoundComponent, {componentName});
+      }
+      if (rootProps) {
+        if (propertyName) {
+          // component assigned to some named property in the
+          rootProps[propertyName] = newElement;
+        } else {
+          if (rootProps.push) {
+            rootProps.push(newElement);
+          } else {
+            console.error('It seems that you missed propertyName in the page component target in the page config.');
+          }
+        }
+      } else {
+        // only page component can be the root element
+        rootProps = newElement;
+      }
+    } else if (type === constants.COMPONENT_PROPERTY_ARRAY_TYPE
+      || type === constants.COMPONENT_PROPERTY_OBJECT_TYPE) {
+      if (rootProps) {
+        if (propertyName) {
+          if (propertyValue) {
+            rootProps[propertyName] = cloneDeep(propertyValue);
+          } else {
+            rootProps[propertyName] = propertyValue;
+          }
+        } else {
+          if (typeof propertyValue !== 'undefined') {
+            rootProps.push(cloneDeep(propertyValue));
+          }
+        }
+      }
+    } else if (type === constants.COMPONENT_PROPERTY_SHAPE_TYPE) {
+      let newObject = {};
+      if (children && children.length > 0) {
+        children.forEach(child => {
+          newObject = renderRealComponent(userComponents, child, newObject);
+        });
+      }
+      if (rootProps) {
+        if (propertyName) {
+          rootProps[propertyName] = newObject;
+        } else {
+          if (rootProps.push) {
+            rootProps.push(newObject);
+          } else {
+            console.error('It seems that you missed propertyName in the page component target in the page config.');
+          }
+        }
+      }
+    } else if (type === constants.COMPONENT_PROPERTY_ARRAY_OF_TYPE) {
+      let newArrayModel = [];
+      if (children && children.length > 0) {
+        children.forEach(child => {
+          newArrayModel = renderRealComponent(userComponents, child, newArrayModel);
         });
       }
       if (rootProps) {
@@ -314,6 +433,15 @@ class PageComposer extends React.Component {
               domNode: null
             }
           }));
+        } else if (type === constants.WEBCODESK_MESSAGE_GET_RAW_HTML) {
+          const staticMarkup = ReactDOMServer.renderToStaticMarkup(this.renderRealPage());
+          sendMessage({
+            type: constants.FRAMEWORK_MESSAGE_RAW_HTML,
+            payload: {
+              rawHtml: staticMarkup
+            },
+            sourceId: this.iframeId
+          });
         }
       }
     }
@@ -420,6 +548,12 @@ class PageComposer extends React.Component {
       onComponentInstanceInitialize: this.handleComponentInstanceInitialize,
       onComponentInstanceDestroy: this.handleComponentInstanceDestroy
     });
+  }
+
+  renderRealPage() {
+    const {userComponents} = this.props;
+    const {componentsTree} = this.state;
+    return renderRealComponent(userComponents, componentsTree);
   }
 
   render () {

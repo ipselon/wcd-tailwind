@@ -7,16 +7,15 @@ import { SectionOrTextProps, SectionOrTextTypes } from './commons/SectionOrText.
  */
 const H5 = ({ tailwindUtilities, children, text }: SectionOrTextProps) => (
     <HtmlElement tag="h5" tailwindUtilities={tailwindUtilities}>
-        {text && text.length > 0 ? text : children}
+        {React.Children.count(children) > 0 ? children : text}
     </HtmlElement>
 );
 
 H5.propTypes = SectionOrTextTypes;
 
 H5.defaultProps = {
-    children: [
-        <span />
-    ],
+    text: 'Text here',
+
 };
 
 export default H5;

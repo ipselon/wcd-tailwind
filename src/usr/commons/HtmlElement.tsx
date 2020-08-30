@@ -1,6 +1,6 @@
-import get from 'lodash/get';
 import React from 'react';
 import constructTailWindClassesString from '../utils/constructTailWindClassesString';
+import pickWithValues from '../utils/pickWithValues';
 
 interface HtmlElementState {
     'data-gen'?: string,
@@ -13,21 +13,13 @@ interface HtmlElementState {
 const HtmlElement = (props: any) => {
     const { tailwindUtilities, children, tag, ...rest } = props;
 
-    const [elementProps, setElementProps] = React.useState<HtmlElementState>({
-        'data-gen': 'tailwindcss',
-        ...rest
-    });
+    let restProperties = pickWithValues(rest);
+    let className = constructTailWindClassesString(tailwindUtilities);
+    if (className) {
+        restProperties.className = className.trim();
+    }
 
-    React.useEffect(() => {
-        setTimeout(() => {
-            let className = constructTailWindClassesString(tailwindUtilities);
-            if (className) {
-                setElementProps({className: className.trim()});
-            }
-        }, 0);
-    }, [tailwindUtilities]);
-
-    return React.createElement(tag || 'div', elementProps, children);
+    return React.createElement(tag || 'div', restProperties, children);
 };
 
 export default HtmlElement;

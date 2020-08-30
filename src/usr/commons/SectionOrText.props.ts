@@ -10,12 +10,12 @@ export interface SectionOrTextProps {
 export const SectionOrTextTypes: PropTypes.InferProps<SectionOrTextProps> = {
     /**
      * An array of the nested HTML elements.
-     * > If there is a value in the text property the children elements are not rendered.
+     * > If there is an element in the children property the text is not rendered.
      */
     children: PropTypes.arrayOf(PropTypes.element),
     /**
      * Text content value.
-     * > If there is a value in the text property the children elements are not rendered.
+     * > If there is an element in the children property the text is not rendered.
      */
     text: PropTypes.string,
     /**
