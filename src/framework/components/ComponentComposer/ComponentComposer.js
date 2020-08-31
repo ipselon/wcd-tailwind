@@ -1,11 +1,13 @@
 import get from 'lodash/get';
-import cloneDeep from 'lodash/cloneDeep';
+import cloneDeep from '../../commons/cloneDeep';
 import isArray from 'lodash/isArray';
+import ReactDOMServer from 'react-dom/server';
+import queryString from 'query-string';
 import React from 'react';
 import PropTypes from 'prop-types';
-import ComponentWrapper from './ComponentWrapper';
 import NotFoundComponent from '../NotFoundComponent';
 import Placeholder from './Placeholder';
+import WarningComponent from '../WarningComponent';
 
 const constants = require('../../commons/constants');
 
@@ -20,17 +22,6 @@ function sendMessage(message) {
   }
 }
 
-const handleComponentEvent = (eventName) => (args) => {
-  sendMessage({
-    type: constants.FRAMEWORK_MESSAGE_COMPONENT_EVENT,
-    payload: {
-      eventName,
-      args,
-      timestamp: Date.now(),
-    }
-  });
-};
-
 const renderComponent = (userComponents, description, rootProps) => {
   if (description) {
     const {type, key, props, children} = description;
@@ -38,19 +29,7 @@ const renderComponent = (userComponents, description, rootProps) => {
       return rootProps;
     }
     const { componentName, propertyName, propertyValue } = props;
-    if (type === constants.COMPONENT_PROPERTY_ELEMENT_TYPE) {
-      const newElement = React.createElement(Placeholder, {key});
-      if (rootProps) {
-        if (propertyName) {
-          rootProps[propertyName] = newElement;
-        } else {
-          rootProps.push(newElement);
-        }
-      } else {
-        // only placeholder component can be the root element
-        rootProps = newElement;
-      }
-    } else if (type === constants.PAGE_COMPONENT_TYPE || type === constants.PAGE_NODE_TYPE) {
+    if (type === constants.PAGE_COMPONENT_TYPE || type === constants.PAGE_NODE_TYPE) {
       let newElement;
       const component = get(userComponents, componentName, null);
       if (component) {
@@ -66,8 +45,8 @@ const renderComponent = (userComponents, description, rootProps) => {
           delete propsComponent.children;
         }
         newElement = React.createElement(
-          ComponentWrapper,
-          {wrappedComponent: component, propsComponent, key},
+          component,
+          {...propsComponent, key},
           nestedComponents
         );
       } else {
@@ -112,10 +91,6 @@ const renderComponent = (userComponents, description, rootProps) => {
         } else {
           rootProps.push(newObject);
         }
-      }
-    } else if (type === constants.COMPONENT_PROPERTY_FUNCTION_TYPE) {
-      if (rootProps && propertyName) {
-        rootProps[propertyName] = handleComponentEvent(propertyName);
       }
     } else if (type === constants.COMPONENT_PROPERTY_ARRAY_OF_TYPE) {
       let newArrayModel = [];
@@ -178,6 +153,10 @@ class ComponentComposer extends React.Component {
   }
 
   componentDidMount () {
+    const paramsMap = queryString.parse(window.location.search);
+    if (paramsMap && paramsMap.iframeId) {
+      this.iframeId = paramsMap.iframeId;
+    }
     window.addEventListener("message", this.handleReceiveMessage, false);
   }
 
@@ -205,6 +184,15 @@ class ComponentComposer extends React.Component {
         this.setState({
           componentsTree: payload,
         });
+      } else if (type === constants.WEBCODESK_MESSAGE_GET_RAW_HTML) {
+        const staticMarkup = ReactDOMServer.renderToStaticMarkup(this.renderPage());
+        sendMessage({
+          type: constants.FRAMEWORK_MESSAGE_RAW_HTML,
+          payload: {
+            rawHtml: staticMarkup
+          },
+          sourceId: this.iframeId
+        });
       }
     }
   }
@@ -220,7 +208,7 @@ class ComponentComposer extends React.Component {
     if (content) {
       return content;
     }
-    return <span />;
+    return <WarningComponent message="Loading..." />;
   }
 }
 

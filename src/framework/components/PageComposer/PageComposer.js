@@ -1,5 +1,5 @@
 import get from 'lodash/get';
-import cloneDeep from 'lodash/cloneDeep';
+import cloneDeep from '../../commons/cloneDeep';
 import isArray from 'lodash/isArray';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
@@ -9,6 +9,7 @@ import ComponentWrapper from "./ComponentWrapper";
 import NotFoundComponent from '../NotFoundComponent';
 import * as mouseOverBoundaries from './mouseOverBoundaries';
 import * as selectedBoundaries from './selectedBoundaries';
+import WarningComponent from '../WarningComponent';
 
 const constants = require('../../commons/constants');
 
@@ -561,7 +562,7 @@ class PageComposer extends React.Component {
     if (content) {
       return content;
     }
-    return <span />;
+    return <WarningComponent message="Loading..." />;
   }
 }
 
