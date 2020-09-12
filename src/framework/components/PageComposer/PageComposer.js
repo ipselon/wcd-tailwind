@@ -32,7 +32,7 @@ const renderComponent = (userComponents, description, serviceComponentOptions, r
     if (!type || !props) {
       return rootProps;
     }
-    const { componentName, propertyName, propertyValue, isSelected } = props;
+    const { componentName, componentInstance, propertyName, propertyValue, isSelected } = props;
     if (isSelected) {
       selectedKeys.push(key);
     }
@@ -75,7 +75,7 @@ const renderComponent = (userComponents, description, serviceComponentOptions, r
           delete propsComponent.children;
         }
         const wrapperProps = {
-          id: key,
+          id: componentInstance,
           key,
           elementKey: key,
           wrappedProps: propsComponent,
@@ -185,7 +185,7 @@ const renderRealComponent = (userComponents, description, rootProps) => {
     if (!type || !props) {
       return rootProps;
     }
-    const { componentName, propertyName, propertyValue } = props;
+    const { componentName, componentInstance, propertyName, propertyValue } = props;
     if (type === constants.PAGE_COMPONENT_TYPE || type === constants.PAGE_NODE_TYPE) {
       let newElement;
       const component = get(userComponents, componentName, null);
@@ -201,7 +201,7 @@ const renderRealComponent = (userComponents, description, rootProps) => {
           nestedComponents = propsComponent.children;
           delete propsComponent.children;
         }
-        newElement = React.createElement(component, {key, ...propsComponent, id: key}, nestedComponents);
+        newElement = React.createElement(component, {key, ...propsComponent, id: componentInstance}, nestedComponents);
       } else {
         newElement = React.createElement(NotFoundComponent, {componentName});
       }
