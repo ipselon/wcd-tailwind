@@ -6,9 +6,9 @@ import pickWithValues from '../utils/pickWithValues';
 /**
  * This is a sample component, it shows how to create function wrappers.
  */
-const Li = ({tailwindUtilities, children, globalAttrs}: SectionProps) => {
+const Li = ({id, tailwindUtilities, children, globalAttrs}: SectionProps) => {
     return (
-        <HtmlElement tag="li" tailwindUtilities={tailwindUtilities} {...pickWithValues(globalAttrs)}>
+        <HtmlElement id={id} tag="li" tailwindUtilities={tailwindUtilities} {...pickWithValues(globalAttrs)}>
             {children}
         </HtmlElement>
     );

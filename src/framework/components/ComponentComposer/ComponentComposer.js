@@ -28,7 +28,7 @@ const renderComponent = (userComponents, description, rootProps) => {
     if (!type || !props) {
       return rootProps;
     }
-    const { componentName, propertyName, propertyValue } = props;
+    const { componentName, componentInstance, propertyName, propertyValue } = props;
     if (type === constants.PAGE_COMPONENT_TYPE || type === constants.PAGE_NODE_TYPE) {
       let newElement;
       const component = get(userComponents, componentName, null);
@@ -46,7 +46,7 @@ const renderComponent = (userComponents, description, rootProps) => {
         }
         newElement = React.createElement(
           component,
-          {...propsComponent, key},
+          {...propsComponent, key, id: componentInstance},
           nestedComponents
         );
       } else {

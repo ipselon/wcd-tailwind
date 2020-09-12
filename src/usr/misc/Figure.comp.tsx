@@ -6,10 +6,10 @@ import pickWithValues from '../utils/pickWithValues';
 /**
  * This is a sample component, it shows how to create function wrappers.
  */
-const Figure = ({tailwindUtilities, children, globalAttrs}: SectionProps) => {
+const Figure = ({id, tailwindUtilities, children, globalAttrs}: SectionProps) => {
     const globalAttrsProps = pickWithValues(globalAttrs);
     return (
-        <HtmlElement tag="figure" tailwindUtilities={tailwindUtilities} {...globalAttrsProps}>
+        <HtmlElement id={id} tag="figure" tailwindUtilities={tailwindUtilities} {...globalAttrsProps}>
             {children}
         </HtmlElement>
     );

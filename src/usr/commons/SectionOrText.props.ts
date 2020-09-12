@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { GlobalProps, GlobalTypes } from './Global.props';
 
 export interface SectionOrTextProps {
-    globalAttrs: GlobalProps;
+    id?: string;
+    globalAttrs?: GlobalProps;
     children?: React.ReactNode;
     text?: string;
     tailwindUtilities?: any;

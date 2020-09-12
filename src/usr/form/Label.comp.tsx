@@ -6,16 +6,16 @@ import pickWithValues from '../utils/pickWithValues';
 /**
  * This is a sample component, it shows how to create function wrappers.
  */
-const Sub = ({ id, tailwindUtilities, children, text, globalAttrs }: SectionOrTextProps) => (
-    <HtmlElement id={id} tag="sub" tailwindUtilities={tailwindUtilities} {...pickWithValues(globalAttrs)}>
+const Label = ({ id, tailwindUtilities, children, text, globalAttrs}: SectionOrTextProps) => (
+    <HtmlElement id={id} tag="label" tailwindUtilities={tailwindUtilities} {...pickWithValues(globalAttrs)}>
         {React.Children.count(children) > 0 ? children : text}
     </HtmlElement>
 );
 
-Sub.propTypes = SectionOrTextTypes;
+Label.propTypes = SectionOrTextTypes;
 
-Sub.defaultProps = {
-    text: 'Text here',
+Label.defaultProps = {
+    text: 'Label',
 };
 
-export default Sub;
+export default Label;

@@ -2,11 +2,6 @@ import React from 'react';
 import constructTailWindClassesString from '../utils/constructTailWindClassesString';
 import pickWithValues from '../utils/pickWithValues';
 
-interface HtmlElementState {
-    'data-gen'?: string,
-    className?: string,
-}
-
 /**
  * HTML element component
  */

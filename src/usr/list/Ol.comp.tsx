@@ -5,7 +5,8 @@ import { GlobalProps, GlobalTypes } from '../commons/Global.props';
 import pickWithValues from '../utils/pickWithValues';
 
 export interface OlProps {
-    globalAttrs: GlobalProps;
+    id?: string;
+    globalAttrs?: GlobalProps;
     reversed?: boolean;
     start?: number;
     type?: string;
@@ -17,6 +18,7 @@ export interface OlProps {
  * This is a sample component, it shows how to create function wrappers.
  */
 const Ol = ({
+                id,
                 tailwindUtilities,
                 children,
                 reversed,
@@ -26,6 +28,7 @@ const Ol = ({
             }: OlProps) => {
     return (
         <HtmlElement
+            id={id}
             tag="ol"
             tailwindUtilities={tailwindUtilities}
             reversed={reversed}

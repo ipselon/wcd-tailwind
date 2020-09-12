@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import { GlobalProps, GlobalTypes } from './Global.props';
 
 export interface EmptyProps {
-    globalAttrs: GlobalProps;
+    id?: string;
+    globalAttrs?: GlobalProps;
     tailwindUtilities?: any;
 }
 

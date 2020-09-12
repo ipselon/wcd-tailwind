@@ -6,8 +6,8 @@ import pickWithValues from '../utils/pickWithValues';
 /**
  * This is a sample component, it shows how to create function wrappers.
  */
-const P = ({ tailwindUtilities, children, text, globalAttrs }: SectionOrTextProps) => (
-    <HtmlElement tag="p" tailwindUtilities={tailwindUtilities} {...pickWithValues(globalAttrs)}>
+const P = ({ id, tailwindUtilities, children, text, globalAttrs }: SectionOrTextProps) => (
+    <HtmlElement id={id} tag="p" tailwindUtilities={tailwindUtilities} {...pickWithValues(globalAttrs)}>
         {React.Children.count(children) > 0 ? children : text}
     </HtmlElement>
 );

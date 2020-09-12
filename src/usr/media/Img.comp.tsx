@@ -5,7 +5,8 @@ import { GlobalProps, GlobalTypes } from '../commons/Global.props';
 import pickWithValues from '../utils/pickWithValues';
 
 export interface ImgProps {
-    globalAttrs: GlobalProps;
+    id?: string;
+    globalAttrs?: GlobalProps;
     alt?: string;
     height?: number;
     width?: number;
@@ -17,14 +18,21 @@ export interface ImgProps {
  * This is a sample component, it shows how to create function wrappers.
  */
 const Img = ({
-                tailwindUtilities,
-                alt, src,
-                height, width,
-                globalAttrs
-            }: ImgProps) => {
-    const properties = {...pickWithValues(globalAttrs), ...pickWithValues({
+                 id,
+                 tailwindUtilities,
+                 alt,
+                 src,
+                 height,
+                 width,
+                 globalAttrs
+             }: ImgProps) => {
+    const properties = {
+        id,
+        ...pickWithValues(globalAttrs),
+        ...pickWithValues({
             alt, src, height, width
-        })};
+        })
+    };
     return (
         <HtmlElement
             tag="img"

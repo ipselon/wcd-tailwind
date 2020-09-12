@@ -5,7 +5,8 @@ import pickWithValues from '../utils/pickWithValues';
 import { GlobalProps, GlobalTypes } from '../commons/Global.props';
 
 export interface AProps {
-    globalAttrs: GlobalProps;
+    id?: string;
+    globalAttrs?: GlobalProps;
     download?: boolean;
     href?: string;
     hreflang?: string;
@@ -22,6 +23,7 @@ export interface AProps {
  * This is a sample component, it shows how to create function wrappers.
  */
 const A = ({
+               id,
                globalAttrs,
                tailwindUtilities,
                children,
@@ -41,6 +43,7 @@ const A = ({
         rel,
         target,
         type,
+        id,
         ...globalAttrs
     });
     if (download) {

@@ -6,20 +6,21 @@ import pickWithValues from '../utils/pickWithValues';
 /**
  * This is a sample component, it shows how to create function wrappers.
  */
-const Footer = ({id, tailwindUtilities, children, globalAttrs}: SectionProps) => {
+const Fieldset = ({id, tailwindUtilities, children, globalAttrs}: SectionProps) => {
+    const globalAttrsProps = pickWithValues(globalAttrs);
     return (
-        <HtmlElement id={id} tag="header" tailwindUtilities={tailwindUtilities} {...pickWithValues(globalAttrs)}>
+        <HtmlElement id={id} tag="fieldset" tailwindUtilities={tailwindUtilities} {...globalAttrsProps}>
             {children}
         </HtmlElement>
     );
 };
 
-Footer.propTypes = SectionTypes;
+Fieldset.propTypes = SectionTypes;
 
-Footer.defaultProps = {
+Fieldset.defaultProps = {
     children: [
         <span />
     ],
 };
 
-export default Footer;
+export default Fieldset;

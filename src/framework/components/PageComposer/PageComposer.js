@@ -75,6 +75,7 @@ const renderComponent = (userComponents, description, serviceComponentOptions, r
           delete propsComponent.children;
         }
         const wrapperProps = {
+          id: key,
           key,
           elementKey: key,
           wrappedProps: propsComponent,
@@ -200,7 +201,7 @@ const renderRealComponent = (userComponents, description, rootProps) => {
           nestedComponents = propsComponent.children;
           delete propsComponent.children;
         }
-        newElement = React.createElement(component, {key, ...propsComponent}, nestedComponents);
+        newElement = React.createElement(component, {key, ...propsComponent, id: key}, nestedComponents);
       } else {
         newElement = React.createElement(NotFoundComponent, {componentName});
       }

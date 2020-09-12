@@ -5,6 +5,7 @@ import { GlobalProps, GlobalTypes } from '../commons/Global.props';
 import pickWithValues from '../utils/pickWithValues';
 
 export interface ButtonProps {
+    id?: string;
     globalAttrs?: GlobalProps;
     autofocus?: boolean;
     disabled?: boolean;
@@ -20,18 +21,21 @@ export interface ButtonProps {
  * This is a sample component, it shows how to create function wrappers.
  */
 const Button = ({
+                    id,
                     tailwindUtilities,
                     globalAttrs,
                     children,
                     text,
-    autofocus,
-    disabled,
-    name,
-    value,
-    type
+                    autofocus,
+                    disabled,
+                    name,
+                    value,
+                    type
                 }: ButtonProps) => {
     const properties = {
-        ...pickWithValues(globalAttrs), ...pickWithValues({autofocus, disabled, name, value, type})
+        id,
+        ...pickWithValues(globalAttrs),
+        ...pickWithValues({ autofocus, disabled, name, value, type })
     };
     return (
         <HtmlElement
